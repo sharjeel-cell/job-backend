@@ -51,7 +51,10 @@ const PORT = process.env.PORT || 3000
  app.use('/api/v1/job',jobRoute)
  app.use('/api/v1/application',appliRoute)
 
-
+// ✅ Root route (for Vercel check)
+app.get('/', (req, res) => {
+    res.send('✅ Server is live! Your backend is successfully deployed on Vercel.');
+});
 
 // app.listen(PORT,()=>{
 //     connectDB()

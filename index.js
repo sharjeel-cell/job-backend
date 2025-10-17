@@ -12,6 +12,8 @@ dotenv.config({});
 
 
 const app = express();
+
+let isConnected = false;
 async function connectToMongoDB() {
     try {
         await mongoose.connect(process.env.MONGO_URI,{

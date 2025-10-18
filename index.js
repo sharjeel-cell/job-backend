@@ -40,7 +40,7 @@ app.use(express.urlencoded({extended:true}))
 app.use(cookieParser());
 const corsoption = {
     origin :['http://localhost:5173',
-      'http://job-frontend-cyan.vercel.app'  
+      'https://job-frontend-cyan.vercel.app'  
     ],
     credentials : true
 }

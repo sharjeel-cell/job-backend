@@ -42,6 +42,7 @@ const corsoption = {
     origin :['http://localhost:5173',
       'https://job-frontend-cyan.vercel.app'  
     ],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     credentials : true
 }
 app.use(cors(corsoption));

@@ -35,6 +35,8 @@ app.use((req,res,next)=>{
     }
     next();
 })
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions)); // ✅ preflight request ke liye
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
 app.use(cookieParser());
@@ -63,9 +65,6 @@ const corsOptions = {
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials: true,
 };
-
-app.use(cors(corsOptions));
-app.options("*", cors(corsOptions)); // ✅ preflight request ke liye
 
 
 const PORT = process.env.PORT || 3000

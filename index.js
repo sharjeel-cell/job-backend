@@ -52,15 +52,25 @@ app.use((req,res,next)=>{
 // app.use(cors(corsOptions));
 // app.options('*', cors(corsOptions)); // ✅ handle preflight
 
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://job-frontend-cyan.vercel.app'
+];
+
 const corsOptions = {
-  origin: [
-    'http://localhost:5173',
-    'https://job-frontend-cyan.vercel.app'
-  ],
+  origin: function(origin, callback) {
+    if (!origin) return callback(null, true); // allow non-browser requests like Postman
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
 };
 
 app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));  // enable preflight for all routes
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))

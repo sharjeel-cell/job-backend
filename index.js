@@ -39,18 +39,28 @@ app.use((req,res,next)=>{
 })
 
 // ✅ Setup CORS
+// const corsOptions = {
+//   origin: [
+//     'http://localhost:5173',
+//     'https://job-frontend-cyan.vercel.app',
+//     'https://job-frontend-git-main-sharjeel-ahmads-projects-6886ba83.vercel.app' // optional
+//   ],
+//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+//   credentials: true,
+// };
+
+// app.use(cors(corsOptions));
+// app.options('*', cors(corsOptions)); // ✅ handle preflight
+
 const corsOptions = {
   origin: [
     'http://localhost:5173',
-    'https://job-frontend-cyan.vercel.app',
-    'https://job-frontend-git-main-sharjeel-ahmads-projects-6886ba83.vercel.app' // optional
+    'https://job-frontend-cyan.vercel.app'
   ],
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  credentials: true,
+  credentials: true
 };
 
 app.use(cors(corsOptions));
-app.options('*', cors(corsOptions)); // ✅ handle preflight
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))

@@ -50,7 +50,7 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-app.options('*', cors(corsOptions)); // ✅ handle preflight
+app.options('https://job-frontend-cyan.vercel.app', cors(corsOptions)); // ✅ handle preflight
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))

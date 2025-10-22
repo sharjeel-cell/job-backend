@@ -10,6 +10,7 @@ import appliRoute from './routes/application.route.js';
 import mongoose from 'mongoose';
 import serverless from 'serverless-http';
 dotenv.config({});
+connectDB();
 
 const app = express();
 
@@ -37,55 +38,45 @@ const app = express();
 //     }
 //     next();
 // })
-
-// const allowedOrigins = [
-//   'http://localhost:5173',
-//   'https://job-frontend-cyan.vercel.app',
-// ];
-
-// const corsOptions = {
-//   origin: function (origin, callback) {
-//     if (!origin || allowedOrigins.includes(origin)) {
-//       callback(null, true);
-//     } else {
-//       callback(new Error(`❌ Not allowed by CORS: ${origin}`));
-//     }
-//   },
-//   credentials: true,
-//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-//   allowedHeaders: ['Content-Type', 'Authorization'],
-// };
-
-// app.use(cors(corsOptions));
-
-// ✅ Optional manual headers (extra safety for Vercel)
-// app.use((req, res, next) => {
-//   res.header("Access-Control-Allow-Origin", req.headers.origin);
-//   res.header("Access-Control-Allow-Methods", "GET,HEAD,PUT,PATCH,POST,DELETE");
-//   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-//   res.header("Access-Control-Allow-Credentials", "true");
-//   next();
-// });
+// ✅ CORS Configuration
+const allowedOrigins = [
+  'https://job-frontend-cyan.vercel.app',
+  'http://localhost:5173'
+];
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error(`Not allowed by CORS: ${origin}`));
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // ✅ Handle preflight requests
 
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
 app.use(cookieParser());
 
-const corsOptions = {
-  origin: [
-    'https://job-frontend-cyan.vercel.app',
-    'http://localhost:5173' // for local testing
-  ],
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true, // ✅ must be true for cookies
-};
+// const corsOptions = {
+//   origin: [
+//     'https://job-frontend-cyan.vercel.app',
+//     'http://localhost:5173' // for local testing
+//   ],
+//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+//   allowedHeaders: ['Content-Type', 'Authorization'],
+//   credentials: true, // ✅ must be true for cookies
+// };
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
-// ✅ Optional but helpful (some Vercel setups need this)
-app.options('*', cors(corsOptions));
+// // ✅ Optional but helpful (some Vercel setups need this)
+// app.options('*', cors(corsOptions));
 
 
 // const corsOptions = {
@@ -104,7 +95,7 @@ app.options('*', cors(corsOptions));
 // app.use(cors(corsoption));
 
 
-const PORT = process.env.PORT || 3000
+//const PORT = process.env.PORT || 3000
  // api's
  app.use('/api/v1/user',userRoute)
  app.use('/api/v1/company',companyRoute)
@@ -123,5 +114,5 @@ app.get('/', (req, res) => {
 //  do not use app.listen() is vercel
 // export const handler = serverless(app);
  
-// export default serverless(app);
+export const handler = serverless(app);
 export default app;

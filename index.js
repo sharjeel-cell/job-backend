@@ -91,10 +91,10 @@ app.use(cookieParser());
 
 const PORT = process.env.PORT || 3000
  // api's
- app.use('/api/v1/user',userRoute)
- app.use('/api/v1/company',companyRoute)
- app.use('/api/v1/job',jobRoute)
- app.use('/api/v1/application',appliRoute)
+ app.use('/v1/user',userRoute)
+ app.use('/v1/company',companyRoute)
+ app.use('/v1/job',jobRoute)
+ app.use('/v1/application',appliRoute)
  console.log(userRoute)
 
 // ✅ Root route (for Vercel check)

@@ -107,7 +107,7 @@ app.get('/', (req, res) => {
 //     console.log(`server running at port ${PORT}`)
 // })
 //  do not use app.listen() is vercel
-export const handler = serverless(app);
+// export const handler = serverless(app);
  
-export default serverless(app);
-//export default app;
+// export default serverless(app);
+export default app;

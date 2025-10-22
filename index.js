@@ -53,7 +53,7 @@ app.use((req,res,next)=>{
 // app.options('*', cors(corsOptions)); // ✅ handle preflight
 
 const allowedOrigins = [
-  'http://localhost:5173',
+  //'http://localhost:5173',
   'https://job-frontend-cyan.vercel.app'
 ];
 

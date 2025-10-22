@@ -8,8 +8,8 @@ import companyRoute from './routes/company.route.js';
 import jobRoute from './routes/job.route.js';
 import appliRoute from './routes/application.route.js';
 import mongoose from 'mongoose';
+import serverless from 'serverless-http';
 dotenv.config({});
-
 
 const app = express();
 
@@ -107,6 +107,7 @@ app.get('/', (req, res) => {
 //     console.log(`server running at port ${PORT}`)
 // })
 //  do not use app.listen() is vercel
+export const handler = serverless(app);
  
 export default serverless(app);
 //export default app;

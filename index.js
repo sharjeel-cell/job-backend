@@ -52,25 +52,55 @@ app.use((req,res,next)=>{
 // app.use(cors(corsOptions));
 // app.options('*', cors(corsOptions)); // ✅ handle preflight
 
+// const allowedOrigins = [
+//   //'http://localhost:5173',
+//   'https://job-frontend-cyan.vercel.app'
+// ];
+
+// const corsOptions = {
+//   origin: function(origin, callback) {
+//     if (!origin) return callback(null, true); // allow non-browser requests like Postman
+//     if (allowedOrigins.includes(origin)) {
+//       return callback(null, true);
+//     } else {
+//       return callback(new Error('Not allowed by CORS'));
+//     }
+//   },
+//   credentials: true
+// };
+
+// app.use(cors(corsOptions));
+// app.options('*', cors(corsOptions));  // enable preflight for all routes
+
 const allowedOrigins = [
-  //'http://localhost:5173',
-  'https://job-frontend-cyan.vercel.app'
+  'http://localhost:5173',
+  'https://job-frontend-cyan.vercel.app',
 ];
 
 const corsOptions = {
-  origin: function(origin, callback) {
-    if (!origin) return callback(null, true); // allow non-browser requests like Postman
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true);
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
     } else {
-      return callback(new Error('Not allowed by CORS'));
+      callback(new Error(`❌ Not allowed by CORS: ${origin}`));
     }
   },
-  credentials: true
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
 app.use(cors(corsOptions));
-app.options('*', cors(corsOptions));  // enable preflight for all routes
+
+// ✅ Optional manual headers (extra safety for Vercel)
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", req.headers.origin);
+  res.header("Access-Control-Allow-Methods", "GET,HEAD,PUT,PATCH,POST,DELETE");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.header("Access-Control-Allow-Credentials", "true");
+  next();
+});
+
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))

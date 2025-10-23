@@ -62,6 +62,11 @@ app.options('*', cors(corsOptions)); // ✅ Handle preflight requests
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
 app.use(cookieParser());
+app.use((req, res, next) => {
+  console.log('Origin:', req.headers.origin);
+  next();
+});
+
 
 // const corsOptions = {
 //   origin: [

@@ -141,6 +141,7 @@ const allowedOrigins = [
   "https://job-frontend-cyan.vercel.app",
   "http://localhost:5173",
 ];
+// add dynamic domains 
 
 // ✅ FIXED CORS
 const corsOptions = {

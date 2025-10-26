@@ -183,7 +183,7 @@ app.use((req, res, next) => {
   console.log("Request Origin:", req.headers.origin);
   next();
 });
-
+const PORT = process.env.PORT || 3000
 // ✅ Routes
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/company", companyRoute);
@@ -191,10 +191,13 @@ app.use("/api/v1/job", jobRoute);
 app.use("/api/v1/application", appliRoute);
 
 // ✅ Root
-app.get("/", (req, res) => {
-  res.send("✅ Server running and CORS working fine!");
-});
-
+//app.get("/", (req, res) => {
+  //res.send("✅ Server running and CORS working fine!");
+//});
+app.listen(PORT,()=>{
+    connectDB()
+     console.log(`server running at port ${PORT}`)
+ })
 // ✅ Export for Vercel
-export const handler = serverless(app);
+//export const handler = serverless(app);
 export default app;
